@@ -5,24 +5,24 @@ import java.util.Objects;
 
 public class Agenda {
     
-    private String tipoAgenda;
+    private String NomeAgenda;
 
-    public Agenda(String tipoAgenda) {
-        this.tipoAgenda = tipoAgenda;
+    public Agenda(String NomeAgenda) {
+        this.NomeAgenda = NomeAgenda;
     }
 
-    public String getTipoAgenda() {
-        return tipoAgenda;
+    public String getNomeAgenda() {
+        return NomeAgenda;
     }
 
-    public void setTipoAgenda(String tipoAgenda) {
-        this.tipoAgenda = tipoAgenda;
+    public void setNomeAgenda(String NomeAgenda) {
+        this.NomeAgenda = NomeAgenda;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.tipoAgenda);
+        hash = 19 * hash + Objects.hashCode(this.NomeAgenda);
         return hash;
     }
 
@@ -35,7 +35,7 @@ public class Agenda {
             return false;
         }
         final Agenda other = (Agenda) obj;
-        if (!Objects.equals(this.tipoAgenda, other.tipoAgenda)) {
+        if (!Objects.equals(this.NomeAgenda, other.NomeAgenda)) {
             return false;
         }
         return true;
@@ -43,8 +43,7 @@ public class Agenda {
 
     @Override
     public String toString() {
-        return "Agenda{" + "tipoAgenda=" + tipoAgenda + '}';
+        return "Agenda{" + "NomeAgenda=" + NomeAgenda + '}';
     }
-    
-    
+     
 }

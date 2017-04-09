@@ -11,14 +11,12 @@ public class Compromisso {
     private Time hora;
     private String descricao;
     private String local;
-    private String tipoAgenda;
-
+    
     public Compromisso(LocalDate data, Time hora, String descricao, String local, String tipoAgenda) {
         this.data = data;
         this.hora = hora;
         this.descricao = descricao;
         this.local = local;
-        this.tipoAgenda = tipoAgenda;
     }
 
     public LocalDate getData() {
@@ -53,22 +51,13 @@ public class Compromisso {
         this.local = local;
     }
 
-    public String getTipoAgenda() {
-        return tipoAgenda;
-    }
-
-    public void setTipoAgenda(String tipoAgenda) {
-        this.tipoAgenda = tipoAgenda;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.data);
-        hash = 79 * hash + Objects.hashCode(this.hora);
-        hash = 79 * hash + Objects.hashCode(this.descricao);
-        hash = 79 * hash + Objects.hashCode(this.local);
-        hash = 79 * hash + Objects.hashCode(this.tipoAgenda);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.data);
+        hash = 41 * hash + Objects.hashCode(this.hora);
+        hash = 41 * hash + Objects.hashCode(this.descricao);
+        hash = 41 * hash + Objects.hashCode(this.local);
         return hash;
     }
 
@@ -93,16 +82,12 @@ public class Compromisso {
         if (!Objects.equals(this.local, other.local)) {
             return false;
         }
-        if (!Objects.equals(this.tipoAgenda, other.tipoAgenda)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Compromisso{" + "data=" + data + ", hora=" + hora + ", descricao=" + descricao + ", local=" + local + ", tipoAgenda=" + tipoAgenda + '}';
+        return "Compromisso{" + "data=" + data + ", hora=" + hora + ", descricao=" + descricao + ", local=" + local + '}';
     }
    
-    
 }
