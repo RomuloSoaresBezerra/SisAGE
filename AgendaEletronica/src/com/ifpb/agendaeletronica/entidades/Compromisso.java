@@ -1,22 +1,28 @@
 
-package com.ifpb.projetoPoo.entidades;
+package com.ifpb.agendaeletronica.entidades;
 
-import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
-public class Compromisso {
+public final class Compromisso {
    
     private LocalDate data;
-    private Time hora;
+    private LocalTime hora;
     private String descricao;
     private String local;
-    
-    public Compromisso(LocalDate data, Time hora, String descricao, String local, String tipoAgenda) {
+    private String tipoAgenda;
+
+    public Compromisso(LocalDate data, LocalTime hora, String descricao, String local, String tipoAgenda) {
+
         this.data = data;
         this.hora = hora;
         this.descricao = descricao;
         this.local = local;
+    }
+
+    public Compromisso() {
+        
     }
 
     public LocalDate getData() {
@@ -27,11 +33,11 @@ public class Compromisso {
         this.data = data;
     }
 
-    public Time getHora() {
+    public LocalTime getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
 
@@ -54,10 +60,11 @@ public class Compromisso {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.data);
-        hash = 41 * hash + Objects.hashCode(this.hora);
-        hash = 41 * hash + Objects.hashCode(this.descricao);
-        hash = 41 * hash + Objects.hashCode(this.local);
+        hash = 83 * hash + Objects.hashCode(this.data);
+        hash = 83 * hash + Objects.hashCode(this.hora);
+        hash = 83 * hash + Objects.hashCode(this.descricao);
+        hash = 83 * hash + Objects.hashCode(this.local);
+        hash = 83 * hash + Objects.hashCode(this.tipoAgenda);
         return hash;
     }
 
@@ -80,6 +87,9 @@ public class Compromisso {
             return false;
         }
         if (!Objects.equals(this.local, other.local)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipoAgenda, other.tipoAgenda)) {
             return false;
         }
         return true;

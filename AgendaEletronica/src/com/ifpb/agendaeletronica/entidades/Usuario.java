@@ -1,22 +1,24 @@
 
-package com.ifpb.projetoPoo.entidades;
+package com.ifpb.agendaeletronica.entidades;
 
-import com.ifpb.projetoPoo.interfaces.AutenticarUsuario;
+import com.ifpb.agendaeletronica.interfaces.AutenticavelUsuario;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Usuario implements AutenticarUsuario{
+public final class Usuario implements AutenticavelUsuario{
    
     private String nome;
     private LocalDate nascimento;
     private char sexo;
     private String email;
     private String senha;
-
-    public Usuario() {
+    
+    public Usuario(){
+        
     }
-
-    public Usuario(String nome, LocalDate nascimento, char sexo, String email, String senha) {
+    
+    public Usuario(String nome, LocalDate nascimento, char sexo, String email, 
+            String senha) {
         this.nome = nome;
         this.nascimento = nascimento;
         this.sexo = sexo;
@@ -92,20 +94,22 @@ public class Usuario implements AutenticarUsuario{
         if (!Objects.equals(this.email, other.email)) {
             return false;
         }
-        if (!Objects.equals(this.senha, other.senha)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.senha, other.senha);
     }
 
     @Override
     public String toString() {
-        return "Usuario{" + "nome=" + nome + ", nascimento=" + nascimento + ", sexo=" + sexo + ", email=" + email + '}';
-    }
-    
-    @Override
-    public boolean autenticarUsuario(String email, String senha){
-        return this.email.equals(email) && this.senha.equals(senha);
+        return "Usuario{" + "nome=" + nome + ", nascimento=" + nascimento + 
+                ", sexo=" + sexo + ", email=" + email + '}';
     }
  
+    @Override
+    public boolean autenticarUsuario(String email, String senha){
+        if((this.email != null && this.email.equals(email)) && (this.senha != null && this.senha.equals(senha))){
+            return true;
+        }else{
+            return false;
+        }
+    }
+   
 }
