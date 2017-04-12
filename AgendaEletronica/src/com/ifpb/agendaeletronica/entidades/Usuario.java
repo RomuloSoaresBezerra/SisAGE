@@ -1,31 +1,29 @@
-
 package com.ifpb.agendaeletronica.entidades;
 
 import com.ifpb.agendaeletronica.interfaces.AutenticavelUsuario;
-import com.ifpb.agendaeletronica.interfaces.DataValidator;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class Usuario implements AutenticavelUsuario, DataValidator{
-   
+public final class Usuario implements AutenticavelUsuario {
+
     private String nome;
     private LocalDate nascimento;
     private char sexo;
     private String email;
     private String senha;
     private List<Agenda> agendas;
-    
-    public Usuario(String nome, LocalDate nascimento, char sexo, String email, 
-            String senha) {
-        this.nome = nome;       
-        if(validaData(nascimento))
-            this.nascimento = nascimento;        
+
+    public Usuario(String nome, LocalDate nascimento, char sexo, String email,
+            String senha) throws DateTimeException {
+        this.nome = nome;
+        this.nascimento = nascimento;
         this.sexo = sexo;
         this.email = email;
         this.senha = senha;
-        this.agendas = new ArrayList<>();       
+        this.agendas = new ArrayList<>();
 
     }
 
@@ -41,10 +39,8 @@ public final class Usuario implements AutenticavelUsuario, DataValidator{
         return nascimento;
     }
 
-    public void setNascimento(LocalDate nascimento) {
-        if(validaData(nascimento)){
-           this.nascimento = nascimento; 
-        }
+    public void setNascimento(LocalDate nascimento) throws DateTimeException {
+        this.nascimento = nascimento;
     }
 
     public char getSexo() {
@@ -102,89 +98,93 @@ public final class Usuario implements AutenticavelUsuario, DataValidator{
         return Objects.equals(this.senha, other.senha);
     }
 
-   
     @Override
-    public boolean autenticarUsuario(String email, String senha){
-        return (this.email != null && this.email.equals(email)) 
+    public boolean autenticarUsuario(String email, String senha) {
+        return (this.email != null && this.email.equals(email))
                 && (this.senha != null && this.senha.equals(senha));
     }
-    
-    public boolean createAgenda(Agenda a){
-        for(Agenda agen : agendas){
-            if(agen.getNomeAgenda().equals(a.getNomeAgenda())){
+
+    public boolean createAgenda(Agenda a) {
+        for (Agenda agen : agendas) {
+            if (agen.getNomeAgenda().equals(a.getNomeAgenda())) {
                 return false;
             }
         }
         return agendas.add(a);
     }
-    
-    public Agenda readAgenda(String nomeAgenda){
-        for(Agenda agen : agendas){
-            if(agen.getNomeAgenda().equals(nomeAgenda)) return agen;
+
+    public Agenda readAgenda(String nomeAgenda) {
+        for (Agenda agen : agendas) {
+            if (agen.getNomeAgenda().equals(nomeAgenda)) {
+                return agen;
+            }
         }
         return null;
     }
-    
-    public List<Agenda> ListarAgendas(){
+
+    public List<Agenda> ListarAgendas() {
         return agendas;
     }
-    
-    public List retornaNomeAgendas(){
+
+    public List retornaNomeAgendas() {
         List<Agenda> agen = new ArrayList<>();
-        for( Agenda a : agendas){
+        for (Agenda a : agendas) {
             agen.add(a);
         }
         return agen;
-        
+
     }
-    
-    public boolean updateAgenda(Agenda a){
-        for(int i=0; i<agendas.size(); i++){
-            if(agendas.get(i).getNomeAgenda().equals(a.getNomeAgenda())){
+
+    public boolean updateAgenda(Agenda a) {
+        for (int i = 0; i < agendas.size(); i++) {
+            if (agendas.get(i).getNomeAgenda().equals(a.getNomeAgenda())) {
                 agendas.set(i, a);
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean deleteAgenda (Agenda a){
+
+    public boolean deleteAgenda(Agenda a) {
         return agendas.remove(a);
     }
-    
+
     //Lista todos os compromissos de todas as agendas de um usuário
-    public List<Compromisso> ListarCompromissosAgendas(){
+    public List<Compromisso> ListarCompromissosAgendas() {
         List compromissos = new ArrayList<>();
-        for(Agenda a : agendas)
+        for (Agenda a : agendas) {
             compromissos.add(a.ListCompromisso());
+        }
         return compromissos;
     }
-    
+
     //Lista todos os compromissos dos próximos 30 dias 
     //de todas as agenda do usuário
-    public List compromissosProx30DaysAgendasUser(){
+    public List compromissosProx30DaysAgendasUser() {
         List listaAgen = new ArrayList<>();
-        if(agendas.isEmpty()) return null;
-        for(Agenda a : agendas)
+        if (agendas.isEmpty()) {
+            return null;
+        }
+        for (Agenda a : agendas) {
             listaAgen.add(a.compromissosProx30DaysAgenda());
+        }
         return listaAgen;
     }
-    
+
     //Lista todos os compromissos de um intervalo de todas as agendas
-    public List<Compromisso> compromissosEntreIntervaloDeAgendas
-        (LocalDate dataInicio, LocalDate dataFim){
+    public List<Compromisso> compromissosEntreIntervaloDeAgendas(LocalDate dataInicio, LocalDate dataFim) {
         List listComp = new ArrayList<>();
-        for(Agenda a : agendas)
+        for (Agenda a : agendas) {
             listComp.add(a.compromissosEntreIntervalo(dataInicio, dataFim));
+        }
         return listComp;
     }
-    
+
     @Override
     public String toString() {
-        return "Usuario{" + "nome=" + nome + ", nascimento=" + nascimento 
-                + ", sexo=" + sexo + ", email=" + email + ", senha=" + senha 
+        return "Usuario{" + "nome=" + nome + ", nascimento=" + nascimento
+                + ", sexo=" + sexo + ", email=" + email + ", senha=" + senha
                 + ", agenda=" + agendas + '}';
     }
-   
-    
+
 }
