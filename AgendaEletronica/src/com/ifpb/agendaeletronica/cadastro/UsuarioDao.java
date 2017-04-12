@@ -5,7 +5,7 @@ import com.ifpb.agendaeletronica.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDao {
+public final class UsuarioDao {
    
     private List<Usuario> usuarios;
 
@@ -42,6 +42,5 @@ public class UsuarioDao {
     public boolean delete (Usuario u){
         return usuarios.remove(u);
     }
-
        
 }

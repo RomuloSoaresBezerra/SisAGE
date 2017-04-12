@@ -1,36 +1,34 @@
 
 package com.ifpb.agendaeletronica.entidades;
 
+import com.ifpb.agendaeletronica.interfaces.DataValidator;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public final class Compromisso {
+public final class Compromisso implements DataValidator{
    
     private LocalDate data;
     private LocalTime hora;
     private String descricao;
     private String local;
-    private String tipoAgenda;
 
-    public Compromisso(LocalDate data, LocalTime hora, String descricao, String local, String tipoAgenda) {
-
+    public Compromisso(LocalDate data, LocalTime hora, String descricao, 
+            String local) { 
         this.data = data;
         this.hora = hora;
         this.descricao = descricao;
         this.local = local;
     }
-
-    public Compromisso() {
-        
-    }
-
+    
     public LocalDate getData() {
         return data;
     }
 
     public void setData(LocalDate data) {
-        this.data = data;
+        if(validaData(data)){
+            this.data = data;
+        }
     }
 
     public LocalTime getHora() {
@@ -64,7 +62,6 @@ public final class Compromisso {
         hash = 83 * hash + Objects.hashCode(this.hora);
         hash = 83 * hash + Objects.hashCode(this.descricao);
         hash = 83 * hash + Objects.hashCode(this.local);
-        hash = 83 * hash + Objects.hashCode(this.tipoAgenda);
         return hash;
     }
 
@@ -86,18 +83,13 @@ public final class Compromisso {
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
-        if (!Objects.equals(this.local, other.local)) {
-            return false;
-        }
-        if (!Objects.equals(this.tipoAgenda, other.tipoAgenda)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.local, other.local);
     }
 
     @Override
     public String toString() {
-        return "Compromisso{" + "data=" + data + ", hora=" + hora + ", descricao=" + descricao + ", local=" + local + '}';
+        return "Compromisso{" + "data=" + data + ", hora=" + hora 
+                + ", descricao=" + descricao + ", local=" + local + '}';
     }
-   
+
 }
