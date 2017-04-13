@@ -50,7 +50,7 @@ public final class Agenda {
     
     /**
      * 
-     * @return o hashCode do objeto agenda 
+     * @return o hashCode da agenda 
      */
     @Override
     public int hashCode() {
@@ -121,7 +121,7 @@ public final class Agenda {
      * Método criado para retornar uma lista de compromissos.
      * @return uma lista de todos os compromissos - vazia ou cheia
      */
-    public List<Compromisso> ListCompromisso() {
+    public List<Compromisso> listarCompromissos() {
         return compromisso;
     }
     
@@ -155,7 +155,7 @@ public final class Agenda {
      * Método criado para retornar todos os compromissos dos próximos 30 dias à 
      * data de acesso do sistema de uma determinada agenda.
      * @return lista de compromissos dos próximos 30 dias à data de acesso do 
-     * sistema de uma agenda.  
+     * sistema de uma agenda ou null em caso de lista vazia.  
      */
     public List<Compromisso> compromissosProx30DaysAgenda() {
         List<Compromisso> listAux = new ArrayList<>();

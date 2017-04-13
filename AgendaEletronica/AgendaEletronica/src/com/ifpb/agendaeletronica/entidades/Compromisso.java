@@ -115,7 +115,7 @@ public final class Compromisso {
     
     /**
      * 
-     * @return hashCode do Compromisso
+     * @return hashCode do compromisso
      */
     @Override
     public int hashCode() {

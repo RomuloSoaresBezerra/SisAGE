@@ -208,7 +208,7 @@ public final class Usuario implements AutenticavelUsuario {
      * Método criado para retornar a lista de todas as agendas de um usuário.
      * @return lista de agendas - vazia ou cheia
      */
-    public List<Agenda> ListarAgendas() {
+    public List<Agenda> listarAgendas() {
         return agendas;
     }
 
@@ -251,19 +251,6 @@ public final class Usuario implements AutenticavelUsuario {
     }
 
     /**
-     * Método criado para retornar todos os compromissos de todas as agendas do 
-     * usuário.
-     * @return lista de todos os compromissos de todas as agendas de um usuário 
-     */
-    public List<Compromisso> ListarCompromissosAgendas() {
-        List compromissos = new ArrayList<>();
-        for (Agenda a : agendas) {
-            compromissos.add(a.ListCompromisso());
-        }
-        return compromissos;
-    }
-
-    /**
      * Método criado para retornar uma lista de todos os compromissos dos 
      * próximos 30 dias à data de acesso do sistema de todas as agendas de 
      * um usuário.
@@ -289,7 +276,8 @@ public final class Usuario implements AutenticavelUsuario {
      * @return lista de todos os compromissos de todas as agendas de um usuário
      * por um intervalo datado 
      */
-    public List<Compromisso> compromissosEntreIntervaloDeAgendas(LocalDate dataInicio, LocalDate dataFim) {
+    public List<Compromisso> compromissosEntreIntervaloDeAgendas(
+            LocalDate dataInicio, LocalDate dataFim) {
         List listComp = new ArrayList<>();
         for (Agenda a : agendas) {
             listComp.add(a.compromissosEntreIntervalo(dataInicio, dataFim));
@@ -297,11 +285,16 @@ public final class Usuario implements AutenticavelUsuario {
         return listComp;
     }
 
+     /**
+     * Método criado para escrever as informações do usuário com todas as 
+     * suas agendas.
+     * @return String de dados do usuário e de todas as suas agendas 
+     */
     @Override
     public String toString() {
-        return "Usuario{" + "nome=" + nome + ", nascimento=" + nascimento
-                + ", sexo=" + sexo + ", email=" + email + ", senha=" + senha
-                + ", agenda=" + agendas + '}';
+        return "Usuario{" + "nome=" + nome + ", nascimento=" + nascimento 
+                + ", sexo=" + sexo + ", email=" + email + ", senha=" + senha 
+                + ", agendas=" + agendas + '}';
     }
-
+ 
 }

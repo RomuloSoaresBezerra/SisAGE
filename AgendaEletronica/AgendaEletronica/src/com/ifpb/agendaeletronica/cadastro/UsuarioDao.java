@@ -38,8 +38,8 @@ public final class UsuarioDao {
     }
     
     /**
-     * Método criado para retornar um usuário dado seu email, caso exista, e null
-     * caso negativo.
+     * Método criado para retornar um usuário dado seu email, caso exista, 
+     * e null caso negativo.
      * @param email email do usuario
      * @return usuário dado seu email caso exista ou null caso negativo
      */
