@@ -12,10 +12,11 @@ import java.util.Objects;
 /**
  * A Classe <code>Agenda</code> é uma classe que representa os tipos de agendas 
  * de um usuário, contém a modelagem da mesma com seus métodos elementares e o 
- * <b>CRUD<b> para a Class <code>Compromisso</code>.
+ * <b>CRUD<b> para a Classe <code>Compromisso</code>.
  * @author Rômulo Soares Bezerra
  * @author Jozimar Soares da Costa
  * @see Compromisso
+ * @see ArrayList
  */
 public final class Agenda {
 
@@ -46,7 +47,11 @@ public final class Agenda {
     public void setNomeAgenda(String nomeAgenda) {
         this.nomeAgenda = nomeAgenda;
     }
-
+    
+    /**
+     * 
+     * @return o hashCode do objeto agenda 
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -54,6 +59,12 @@ public final class Agenda {
         return hash;
     }
 
+    /**
+     * 
+     * @param obj objeto a ser comparado
+     * @return número neutro se o objeto comparado for igual, numero negativo 
+     * se for menor e numero positovo se for maior
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -65,11 +76,12 @@ public final class Agenda {
         final Agenda other = (Agenda) obj;
         return Objects.equals(this.nomeAgenda, other.nomeAgenda);
     }
+    
     /**
-     * Método que adiciona um compromisso numa lista de compromissos, validando:
-     * se existe um compromisso com a mesma data e na mesma hora; se a data é
-     * válida e não já se passou; e se a hora de um compromisso de um dia já 
-     * passou.
+     * Método criado para adicionar um compromisso numa lista de compromissos, 
+     * validando: se existe um compromisso com a mesma data e na mesma hora; se 
+     * a data é válida e não já se passou; e se a hora de um compromisso de um 
+     * dia já passou.
      * @param c compromisso criado para um tipo de agenda
      * @return true se um compromisso foi adicionado, false caso negativo
      */
@@ -90,10 +102,11 @@ public final class Agenda {
     }
     
     /**
-     * Método que retorna um objeto Compromisso por sua data e hora
+     * Método que retorna um objeto Compromisso por sua data e hora ou null em 
+     * caso de inexistência.
      * @param data data de um compromisso.
      * @param hora hora de um compromisso.
-     * @return compromisso da respectiva data e hora.
+     * @return compromisso da respectiva data e hora ou null caso não exista.
      */
     public Compromisso readCompromisso(LocalDate data, LocalTime hora) {
         for (Compromisso comp : compromisso) {
@@ -106,7 +119,7 @@ public final class Agenda {
     
     /**
      * Método criado para retornar uma lista de compromissos.
-     * @return uma lista de todos os compromissos 
+     * @return uma lista de todos os compromissos - vazia ou cheia
      */
     public List<Compromisso> ListCompromisso() {
         return compromisso;

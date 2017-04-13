@@ -4,11 +4,13 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
+
 /**
- * Essa Classe representa todas as informações 
- * de um Compromisso 
- * @author Jozimar Soares
- * @author Rômulo Bezerra
+ * A Classe <code>Compromisso</code> é uma classe que representa as informações 
+ * de um compromisso, contém a modelagem da mesma com seus métodos elementares.
+ * @author Rômulo Soares Bezerra
+ * @author Jozimar Soares da Costa
+ * @see Agenda
  */
 public final class Compromisso {
 
@@ -16,14 +18,15 @@ public final class Compromisso {
     private LocalTime hora;
     private String descricao;
     private String local;
-/**
- * Construtor da classe Compromisso
- * @param data representa a data do Compromisso
- * @param hora representa a hora do Compromisso
- * @param descricao representa uma breve descrição do Compromisso
- * @param local representa o local onde ocorrerá o Compromisso
- * @throws DateTimeException lança uma Exceção de data e hora inválidas
- */
+    
+    /**
+     * Construtor da classe Compromisso
+     * @param data data do compromisso
+     * @param hora hora do compromisso
+     * @param descricao descrição do Compromisso
+     * @param local local onde ocorrerá o Compromisso
+     * @throws DateTimeException lança uma Exceção de data e hora inválidas
+     */
     public Compromisso(LocalDate data, LocalTime hora, String descricao,
             String local) throws DateTimeException {
         if (data.isBefore(LocalDate.now())) {
@@ -37,74 +40,83 @@ public final class Compromisso {
         this.descricao = descricao;
         this.local = local;
     }
-/**
- * getData do Compromisso
- * @return a data do Compromisso
- */
+    
+    /**
+     * 
+     * @return data do Compromisso
+     */
     public LocalDate getData() {
         return data;
     }
-/**
- * setData do Compromisso
- * @param data representa a data do compromisso
- * @throws DateTimeException lança uma Exceção de data inválida
- */
+    
+    /**
+     * 
+     * @param data data do compromisso
+     * @throws DateTimeException lança uma Exceção de data inválida
+     */
     public void setData(LocalDate data) throws DateTimeException {
         if (data.isBefore(LocalDate.now())) {
             throw new DateTimeException("A data é inválida!");
         }
         this.data = data;
     }
-/**
- * getHora do Compromisso
- * @return a hora do Compromisso
- */
+    
+    /**
+     * 
+     * @return a hora do Compromisso
+     */
     public LocalTime getHora() {
         return hora;
     }
-/**
- * setHora do Compromisso
- * @param hora representa a hora do Compromisso
- * @throws DateTimeException lança uma Exceção de hora inválida 
- */
+
+    /**
+     * 
+     * @param hora hora do Compromisso
+     * @throws DateTimeException lança uma Exceção de hora inválida 
+     */
     public void setHora(LocalTime hora) throws DateTimeException {
         if (hora.isBefore(LocalTime.now())) {
             throw new DateTimeException("A Hora é Inválida");
         }
         this.hora = hora;
     }
-/**
- * getDescricao do Compromisso
- * @return a descrição do Compromisso
- */
+
+    /**
+    * 
+    * @return descrição do Compromisso
+    */
     public String getDescricao() {
         return descricao;
     }
-/**
- * setDescricao do Compromisso
- * @param descricao representa a descrição do Compromisso
- */
+    
+    /**
+     * 
+     * @param descricao descrição do Compromisso
+     */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-/**
- * getLocal do Compromisso
- * @return o local do Compromisso
- */
+
+    /**
+    * 
+    * @return local do Compromisso
+    */
     public String getLocal() {
         return local;
     }
-/**
- * setLocal do Compromisso
- * @param local representa o local do Compromisso
- */
+    
+    /**
+     * 
+     * @param local local do Compromisso
+     */
     public void setLocal(String local) {
         this.local = local;
     }
-/**
- * hashCode do Compromisso
- * @return o hash do Compromisso
- */
+    
+    /**
+     * 
+     * @return o hash do Compromisso
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -114,11 +126,12 @@ public final class Compromisso {
         hash = 83 * hash + Objects.hashCode(this.local);
         return hash;
     }
-/**
- * equals do Compromisso
- * @param obj representa um objeto
- * @return o equals do Compromisso 
- */
+    
+    /**
+     * equals do Compromisso
+     * @param obj representa um objeto
+     * @return equals do Compromisso 
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -139,10 +152,11 @@ public final class Compromisso {
         }
         return Objects.equals(this.local, other.local);
     }
-/**
- * toString do Compromisso
- * @return a String formatada do Compromisso
- */
+    
+    /**
+     * 
+     * @return String formatada do Compromisso
+     */
     @Override
     public String toString() {
         return "Compromisso{" + "data=" + data + ", hora=" + hora
