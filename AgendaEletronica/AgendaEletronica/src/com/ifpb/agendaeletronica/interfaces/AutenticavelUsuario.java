@@ -9,7 +9,7 @@ package com.ifpb.agendaeletronica.interfaces;
  * @see Usuario
  */
 public interface AutenticavelUsuario {
-    /**
+    /**Método autenticarUsuario();
      * Método criado para realizar a autentificação de um usuário
      * @param email email do usuário
      * @param senha senha do usuário

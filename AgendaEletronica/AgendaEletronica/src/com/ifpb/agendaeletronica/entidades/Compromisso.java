@@ -115,7 +115,7 @@ public final class Compromisso {
     
     /**
      * 
-     * @return o hash do Compromisso
+     * @return hashCode do Compromisso
      */
     @Override
     public int hashCode() {
@@ -128,9 +128,10 @@ public final class Compromisso {
     }
     
     /**
-     * equals do Compromisso
-     * @param obj representa um objeto
-     * @return equals do Compromisso 
+     * equals Compromisso
+     * @param obj objeto a ser comparado
+     * @return número neutro se o objeto comparado for igual, numero negativo 
+     * se for maior e numero positovo se for menor
      */
     @Override
     public boolean equals(Object obj) {
@@ -154,7 +155,7 @@ public final class Compromisso {
     }
     
     /**
-     * 
+     * toString Compromisso
      * @return String formatada do Compromisso
      */
     @Override

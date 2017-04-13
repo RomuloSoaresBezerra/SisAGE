@@ -63,7 +63,7 @@ public final class Agenda {
      * 
      * @param obj objeto a ser comparado
      * @return número neutro se o objeto comparado for igual, numero negativo 
-     * se for menor e numero positovo se for maior
+     * se for maior e numero positovo se for menor
      */
     @Override
     public boolean equals(Object obj) {

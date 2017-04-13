@@ -44,7 +44,7 @@ public final class UsuarioDao {
      * @param email email do usuario
      * @return usuário dado seu email caso exista ou null caso negativo
      */
-    public Usuario read(String email) {
+    public Usuario readUsuario(String email) {
         for (Usuario u : usuarios) {
             if (u.getEmail().equals(email)) {
                 return u;

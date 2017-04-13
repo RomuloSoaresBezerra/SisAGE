@@ -117,6 +117,10 @@ public final class Usuario implements AutenticavelUsuario {
         this.senha = senha;
     }
 
+    /**
+     * 
+     * @return hashCode do usuario 
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -128,6 +132,12 @@ public final class Usuario implements AutenticavelUsuario {
         return hash;
     }
 
+    /**
+     * 
+     * @param obj objeto a ser comparado
+     * @return número neutro se o objeto comparado for igual, numero negativo 
+     * se for maior e numero positovo se for menor
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -184,7 +194,7 @@ public final class Usuario implements AutenticavelUsuario {
     /**
      * Método criado para retonar uma agenda dado seu nome.
      * @param nomeAgenda nome da agenda
-     * @return uma agenda passada o nome
+     * @return uma agenda passada o nome ou null caso não exista
      */
     public Agenda readAgenda(String nomeAgenda) {
         for (Agenda agen : agendas) {
@@ -197,7 +207,7 @@ public final class Usuario implements AutenticavelUsuario {
 
     /**
      * Método criado para retornar a lista de todas as agendas de um usuário.
-     * @return lista de agendas 
+     * @return lista de agendas - vazia ou cheia
      */
     public List<Agenda> ListarAgendas() {
         return agendas;
