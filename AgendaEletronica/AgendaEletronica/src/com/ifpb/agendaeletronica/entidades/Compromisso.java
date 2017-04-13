@@ -6,8 +6,8 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 /**
- * A Classe <code>Compromisso</code> é uma classe que representa as informações 
- * de um compromisso, contém a modelagem da mesma com seus métodos elementares.
+ * Classe que representa as informações de um compromisso, contém a modelagem 
+ * da mesma com seus métodos elementares.
  * @author Rômulo Soares Bezerra
  * @author Jozimar Soares da Costa
  * @see Agenda
@@ -128,7 +128,6 @@ public final class Compromisso {
     }
     
     /**
-     * equals Compromisso
      * @param obj objeto a ser comparado
      * @return número neutro se o objeto comparado for igual, numero negativo 
      * se for maior e numero positovo se for menor
@@ -155,8 +154,8 @@ public final class Compromisso {
     }
     
     /**
-     * toString Compromisso
-     * @return String formatada do Compromisso
+     * Método criado para escrever os dados do compromisso
+     * @return String de descrição dos dados do compromisso
      */
     @Override
     public String toString() {

@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Classe <code>UsuarioDao</code> é uma classe que contem o 
- * <b>CRUD<b> para a Classe <code>Usuario</code>.
+ * Classe que contem o CRUD para a Classe <code>Usuario</code>.
  * @author Rômulo Soares Bezerra
  * @author Jozimar Soares da Costa
  * @see ArrayList

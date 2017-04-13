@@ -1,12 +1,10 @@
 package com.ifpb.agendaeletronica.interfaces;
 
 /**
- * Uma <code>AutenticavelUsuario</code> é uma interface que valida o 
- * login de um usuário. A classe <code>Usuario</code> implementa essa interface 
- * para autenticar o email e a senha de um usuário.
+ * Interface que valida o login de um usuário. A classe <code>Usuario</code> 
+ * implementa essa interface para autenticar o email e a senha de um usuário.
  * @author Rômulo Soares Bezerra
  * @author Jozimar Soares da Costa
- * @see Usuario
  */
 public interface AutenticavelUsuario {
     /**Método autenticarUsuario();

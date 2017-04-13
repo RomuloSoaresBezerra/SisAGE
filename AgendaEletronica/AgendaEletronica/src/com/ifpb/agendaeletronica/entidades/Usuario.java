@@ -8,9 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A Classe <code>Usuario</code> é uma classe que representa as informações 
- * de um usuário, contém a modelagem da mesma com seus métodos elementares e o 
- * <b>CRUD<b> para a Classe <code>Agenda</code>.
+ * Classe que representa as informações de um usuário, contém a modelagem da 
+ * mesma com seus métodos elementares e o CRUD para a Classe <code>Agenda</code>.
  * @author Rômulo Soares Bezerra
  * @author Jozimar Soares da Costa
  * @see Agenda
@@ -25,13 +24,13 @@ public final class Usuario implements AutenticavelUsuario {
     private List<Agenda> agendas;
     
     /**
-     * Constritor de <code>Usuario</code>
+     * Construtor de <code>Usuario</code>
      * @param nome nome do usuário
      * @param nascimento data de nascimento do usuário
      * @param sexo tipo do sexo do usuário
      * @param email email do usuário
      * @param senha senha do usuário
-     * @throws DateTimeException 
+     * @throws DateTimeException lança uma Exceção de data inválida 
      */
     public Usuario(String nome, LocalDate nascimento, char sexo, String email,
             String senha) throws DateTimeException {
@@ -71,7 +70,7 @@ public final class Usuario implements AutenticavelUsuario {
     /**
      * 
      * @param nascimento data de nascimento do usuário
-     * @throws DateTimeException 
+     * @throws java.time.DateTimeException gera exceção caso data inválida
      */
     public void setNascimento(LocalDate nascimento) throws DateTimeException {
         this.nascimento = nascimento;

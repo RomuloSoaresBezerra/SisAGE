@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A Classe <code>Agenda</code> é uma classe que representa os tipos de agendas 
- * de um usuário, contém a modelagem da mesma com seus métodos elementares e o 
- * <b>CRUD<b> para a Classe <code>Compromisso</code>.
+ * Classe que representa os tipos de agendas de um usuário, contém a modelagem 
+ * da mesma com seus métodos elementares e o CRUD para a Classe 
+ * <code>Compromisso</code>.
  * @author Rômulo Soares Bezerra
  * @author Jozimar Soares da Costa
  * @see Compromisso
@@ -24,7 +24,7 @@ public final class Agenda {
     private List<Compromisso> compromisso;
     
     /**
-     * Construtor de <code>Agenda</code>
+     * Construtor de Agenda
      * @param nomeAgenda tipo da agenda do usuário
      */
     public Agenda(String nomeAgenda) {
@@ -196,7 +196,11 @@ public final class Agenda {
         }
         return listaCompIntervalo;
     }
-
+    
+    /**
+     * Método criado para escrever os dados de agenda e seus compromissos
+     * @return String com os dados da agenda e seus compromissos
+     */
     @Override
     public String toString() {
         return "Agenda{" + "nomeAgenda=" + nomeAgenda + ", compromisso="
