@@ -1,6 +1,10 @@
 package com.ifpb.agendaeletronica.entidades;
 
+import com.ifpb.agendaeletronica.excecoes.NomeInvalidoException;
 import com.ifpb.agendaeletronica.interfaces.AutenticavelUsuario;
+import com.ifpb.agendaeletronica.excecoes.EmailInvalidoException;
+import com.ifpb.agendaeletronica.excecoes.SenhaInvalidaException;
+import java.io.Serializable;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +18,7 @@ import java.util.Objects;
  * @author Jozimar Soares da Costa
  * @see Agenda
  */
-public final class Usuario implements AutenticavelUsuario {
+public final class Usuario implements  Serializable, AutenticavelUsuario{
 
     private String nome;
     private LocalDate nascimento;
@@ -23,6 +27,9 @@ public final class Usuario implements AutenticavelUsuario {
     private String senha;
     private List<Agenda> agendas;
     
+    public Usuario(){
+    
+}
     /**
      * Construtor de <code>Usuario</code>
      * @param nome nome do usuário
@@ -55,7 +62,8 @@ public final class Usuario implements AutenticavelUsuario {
      * 
      * @param nome nome do usuário 
      */
-    public void setNome(String nome) {
+    public void setNome(String nome) throws NomeInvalidoException{
+        if(nome.equals("")) throw new NomeInvalidoException();
         this.nome = nome;
     }
     
@@ -104,15 +112,21 @@ public final class Usuario implements AutenticavelUsuario {
      * 
      * @param email email do usuário 
      */
-    public void setEmail(String email) {
+    public void setEmail(String email) throws EmailInvalidoException{
+        if(email.equals("")) throw new EmailInvalidoException();
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
     }
     
     /**
      * 
      * @param senha senha do usuário
      */
-    public void setSenha(String senha) {
+    public void setSenha(String senha) throws SenhaInvalidaException{
+        if(senha.equals("")) throw new SenhaInvalidaException();
         this.senha = senha;
     }
 
