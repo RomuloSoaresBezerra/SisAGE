@@ -24,19 +24,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author Familia
  */
-public class TelaCompromisso extends javax.swing.JFrame {
+public class TelaEditarCompromisso extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCompromisso
      */
      private AgendaDao dao;
      private UsuarioDao dao2;
-    public TelaCompromisso() {
+    public TelaEditarCompromisso() {
 
         dao = new AgendaDaoBinario();
         dao2=new UsuarioDaoBinario();
@@ -49,13 +50,17 @@ public class TelaCompromisso extends javax.swing.JFrame {
          try {
              vetor = dao.retornaNomeAgendas();
          } catch (IOException ex) {
-             Logger.getLogger(TelaCompromisso.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(TelaEditarCompromisso.class.getName()).log(Level.SEVERE, null, ex);
          } catch (ClassNotFoundException ex) {
-             Logger.getLogger(TelaCompromisso.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(TelaEditarCompromisso.class.getName()).log(Level.SEVERE, null, ex);
          }
         comboAgenda.removeAllItems(); 
         for(int i = 0; i<vetor.size(); i++)
         comboAgenda.addItem(vetor.get(i));
+        
+       
+        
+         
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,12 +83,13 @@ public class TelaCompromisso extends javax.swing.JFrame {
         campoDescricao = new javax.swing.JTextField();
         campoLocal = new javax.swing.JTextField();
         comboAgenda = new javax.swing.JComboBox();
-        botaoOk = new javax.swing.JButton();
+        botaoExcluir = new javax.swing.JButton();
+        botaoAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Novo Compromisso");
+        jLabel1.setText("Editar Compromisso");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Data");
@@ -129,11 +135,19 @@ public class TelaCompromisso extends javax.swing.JFrame {
             }
         });
 
-        botaoOk.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        botaoOk.setText("OK");
-        botaoOk.addActionListener(new java.awt.event.ActionListener() {
+        botaoExcluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoExcluir.setText("Excluir");
+        botaoExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoOkActionPerformed(evt);
+                botaoExcluirActionPerformed(evt);
+            }
+        });
+
+        botaoAtualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
             }
         });
 
@@ -160,23 +174,27 @@ public class TelaCompromisso extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(campoMinuto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoDescricao)
-                                    .addComponent(campoLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                    .addComponent(comboAgenda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(botaoOk)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(botaoAtualizar)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(botaoExcluir))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel6))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(campoDescricao)
+                                        .addComponent(campoLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                        .addComponent(comboAgenda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                 .addContainerGap(101, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {campoHora, campoMinuto});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botaoAtualizar, botaoExcluir});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,9 +223,11 @@ public class TelaCompromisso extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(comboAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(botaoOk)
-                .addGap(25, 25, 25))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoExcluir)
+                    .addComponent(botaoAtualizar))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,13 +241,11 @@ public class TelaCompromisso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoLocalActionPerformed
 
-    private void botaoOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkActionPerformed
+    private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
     
         Compromisso compromisso = new Compromisso();
         Agenda agenda = new Agenda();
         try {
-
-            
             
             compromisso.setDescricao(campoDescricao.getText());
 
@@ -261,9 +279,9 @@ public class TelaCompromisso extends javax.swing.JFrame {
                             JOptionPane.ERROR_MESSAGE);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(TelaCompromisso.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TelaEditarCompromisso.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(TelaCompromisso.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TelaEditarCompromisso.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } catch (DateTimeParseException ex) {
@@ -281,12 +299,16 @@ public class TelaCompromisso extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_botaoOkActionPerformed
+    }//GEN-LAST:event_botaoExcluirActionPerformed
 
     private void comboAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAgendaActionPerformed
     
    
     }//GEN-LAST:event_comboAgendaActionPerformed
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,26 +328,28 @@ public class TelaCompromisso extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditarCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditarCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditarCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaEditarCompromisso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCompromisso().setVisible(true);
+                new TelaEditarCompromisso().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoOk;
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoExcluir;
     private com.toedter.calendar.JDateChooser campoData;
     private javax.swing.JTextField campoDescricao;
     private javax.swing.JSpinner campoHora;

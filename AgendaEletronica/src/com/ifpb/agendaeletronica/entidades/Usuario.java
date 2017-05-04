@@ -261,7 +261,7 @@ public final class Usuario implements  Serializable, AutenticavelUsuario{
 //        return listaAgen;
 //    }
     
-    public List<Compromisso> compProx30DiasAgendaUser()
+    public List<Compromisso> compProx30DiasAgendaUser(String nomeAgenda, LocalDate dataInicio, LocalDate dataFim)
             throws IOException, ClassNotFoundException {
         
         List<Agenda> agenda;
@@ -275,25 +275,32 @@ public final class Usuario implements  Serializable, AutenticavelUsuario{
         } else {
             return new ArrayList<>();
         }
-         
-        Date dataDoUsuario = java.sql.Date.valueOf(LocalDate.now());
-        Calendar c = Calendar.getInstance();
-        c.setTime(dataDoUsuario);
-        c.add(Calendar.DATE, +30);
-        dataDoUsuario = c.getTime();
-        LocalDate data = dataDoUsuario.toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        for(int i=0; i<agenda.size(); i++){
-            if(agenda.get(i).getEmail().equals(TelaInicial.usuarioLogado.getEmail())){
+    
+        if(nomeAgenda.equals("Todas")){
+            for(int i=0; i<agenda.size(); i++){
+            if((agenda.get(i).getEmail().equals(TelaInicial.usuarioLogado.getEmail()))){
                 listaCompromissos = agenda.get(i).getCompromisso();
                 for (int g=0; g<listaCompromissos.size(); g++) {
                     if ((listaCompromissos.get(g).getData().compareTo(LocalDate.now()) >= 0)
-                        && (listaCompromissos.get(g).getData().compareTo(data) <= 0)) {
+                        && (listaCompromissos.get(g).getData().compareTo(dataFim) <= 0)) {
                         comp30Dias.add(listaCompromissos.get(g));
                     }
                 }      
             }  
+        }
+        }else{
+            for(int i=0; i<agenda.size(); i++){
+                if((agenda.get(i).getEmail().equals(TelaInicial.usuarioLogado.getEmail())) 
+                        && (agenda.get(i).getNomeAgenda().endsWith(nomeAgenda))){
+                    listaCompromissos = agenda.get(i).getCompromisso();
+                    for (int g=0; g<listaCompromissos.size(); g++) {
+                        if ((listaCompromissos.get(g).getData().compareTo(LocalDate.now()) >= 0)
+                            && (listaCompromissos.get(g).getData().compareTo(dataFim) <= 0)) {
+                            comp30Dias.add(listaCompromissos.get(g));
+                        }
+                    }      
+                }  
+            }
         }
         return comp30Dias;
     }

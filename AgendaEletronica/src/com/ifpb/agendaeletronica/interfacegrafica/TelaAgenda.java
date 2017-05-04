@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -39,6 +41,7 @@ public class TelaAgenda extends javax.swing.JFrame {
         dao = new UsuarioDaoBinario();
         dao2 = new AgendaDaoBinario();
         initComponents();
+        
     }
 
     /**
@@ -58,7 +61,7 @@ public class TelaAgenda extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Agenda");
+        jLabel1.setText("Nova Agenda");
 
         campoNomeAgenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNomeAgenda.addActionListener(new java.awt.event.ActionListener() {
@@ -97,7 +100,7 @@ public class TelaAgenda extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
                                 .addComponent(botaoCriarAgenda)))))
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,6 +139,7 @@ public class TelaAgenda extends javax.swing.JFrame {
                     
                     JOptionPane.showMessageDialog(null,
                             "Cadastrado com sucesso");
+                    TelaInicial.inicializarComponentes();
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null,
@@ -154,9 +158,14 @@ public class TelaAgenda extends javax.swing.JFrame {
                     "Nome não pode ser vazio", "Mensagem de erro",
                     JOptionPane.ERROR_MESSAGE);
         }
+        
+        
+    
+        
+        
            
     }//GEN-LAST:event_botaoCriarAgendaActionPerformed
-
+   
     /**
      * @param args the command line arguments
      */

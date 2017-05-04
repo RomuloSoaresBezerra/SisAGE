@@ -8,6 +8,7 @@ package com.ifpb.agendaeletronica.cadastro;
 import com.ifpb.agendaeletronica.entidades.Agenda;
 import com.ifpb.agendaeletronica.entidades.Compromisso;
 import com.ifpb.agendaeletronica.interfacegrafica.TelaInicial;
+import static com.ifpb.agendaeletronica.interfacegrafica.TelaInicial.usuarioLogado;
 import com.ifpb.agendaeletronica.interfaces.AgendaDao;
 import java.io.File;
 import java.io.FileInputStream;
@@ -67,7 +68,7 @@ public class AgendaDaoBinario implements AgendaDao{
         List<Agenda> agendas = listarAgendas();
         
         for (Agenda agen : agendas) {
-            if (agen.getNomeAgenda().equals(a.getNomeAgenda())) {
+            if (agen.getNomeAgenda().equals(a.getNomeAgenda()) && agen.getEmail().equals(TelaInicial.usuarioLogado.getEmail())) {
                 return false;
             }
         }
@@ -82,7 +83,7 @@ public class AgendaDaoBinario implements AgendaDao{
          List<Agenda> agendas = listarAgendas();
         
          for (Agenda agen : agendas) {
-            if (agen.getNomeAgenda().equals(nomeAgenda)) {
+            if (agen.getNomeAgenda().equals(nomeAgenda) && agen.getEmail().equals(TelaInicial.usuarioLogado.getEmail())) {
                 return agen;
             }
         }

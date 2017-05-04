@@ -14,6 +14,11 @@ import com.ifpb.agendaeletronica.interfaces.AgendaDao;
 import com.ifpb.agendaeletronica.interfaces.UsuarioDao;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,12 +36,33 @@ public class TelaInicial extends javax.swing.JFrame {
      */
     public static Usuario usuarioLogado;
     private UsuarioDao dao;
-    private AgendaDao dao2;
+    private static AgendaDao dao2;
+
     public TelaInicial(Usuario u) {
         dao = new UsuarioDaoBinario();
         dao2 = new AgendaDaoBinario();
         usuarioLogado = u;
+
         initComponents();
+        inicializarComponentes();
+
+    }
+
+    public static void inicializarComponentes() {
+        List<String> vetor = new ArrayList<>();
+
+        try {
+            vetor = dao2.retornaNomeAgendas();
+        } catch (IOException ex) {
+            Logger.getLogger(TelaCompromisso.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaCompromisso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        comboNomeAgenda.removeAllItems();
+        comboNomeAgenda.addItem("Todas");
+        for (int i = 0; i < vetor.size(); i++) {
+            comboNomeAgenda.addItem(vetor.get(i));
+        }
     }
 
     /**
@@ -49,33 +75,34 @@ public class TelaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botaoCriarCompromisso = new javax.swing.JButton();
+        botaoCriarAgendas = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jButton4 = new javax.swing.JButton();
+        comboNomeAgenda = new javax.swing.JComboBox();
+        botaoAtualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaInicial = new javax.swing.JTable();
+        botaoGerenciarAgendas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Página Inicial");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Novo Compromisso");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoCriarCompromisso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoCriarCompromisso.setText("Novo Compromisso");
+        botaoCriarCompromisso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoCriarCompromissoActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Gerenciar Agendas");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botaoCriarAgendas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoCriarAgendas.setText("Nova Agenda");
+        botaoCriarAgendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botaoCriarAgendasActionPerformed(evt);
             }
         });
 
@@ -90,19 +117,19 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Proximos Compromissos");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comboNomeAgenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        comboNomeAgenda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas" }));
+        comboNomeAgenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comboNomeAgendaActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton4.setText("Atualizar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        botaoAtualizar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAtualizar.setText("Atualizar");
+        botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                botaoAtualizarActionPerformed(evt);
             }
         });
 
@@ -118,6 +145,14 @@ public class TelaInicial extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelaInicial);
 
+        botaoGerenciarAgendas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoGerenciarAgendas.setText("Gerenciar Agenda");
+        botaoGerenciarAgendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoGerenciarAgendasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,108 +160,123 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(296, 296, 296)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jLabel2)
                         .addGap(42, 42, 42)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboNomeAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
-                        .addComponent(jButton4))
+                        .addComponent(botaoAtualizar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton2)
-                                .addGap(41, 41, 41)
-                                .addComponent(jButton3)))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(botaoCriarCompromisso)
+                                    .addComponent(botaoCriarAgendas))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(70, 70, 70)
+                                        .addComponent(jLabel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(botaoGerenciarAgendas)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jButton3)))))))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botaoCriarAgendas, botaoCriarCompromisso, botaoGerenciarAgendas, jButton3});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton4, jComboBox1});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botaoAtualizar, comboNomeAgenda});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1)
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoGerenciarAgendas, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(botaoCriarCompromisso, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoCriarAgendas, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
-                .addGap(41, 41, 41)
+                    .addComponent(comboNomeAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAtualizar))
+                .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoCriarCompromissoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarCompromissoActionPerformed
         TelaCompromisso telaCompromisso = new TelaCompromisso();
         telaCompromisso.setVisible(true);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoCriarCompromissoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     TelaAgenda telaAgenda = new TelaAgenda();
+    private void botaoCriarAgendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCriarAgendasActionPerformed
+        TelaAgenda telaAgenda = new TelaAgenda();
         telaAgenda.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botaoCriarAgendasActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        TelaGerenciarCompromisso telaGerenciarCompromisso = new TelaGerenciarCompromisso();
+        telaGerenciarCompromisso.setVisible(true);
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
+
         
+
         List<Compromisso> compromissos30dias;
         try {
-            compromissos30dias = dao.readUsuario(usuarioLogado.getEmail()).compProx30DiasAgendaUser();
-            String[] titulos = {"Data", "Hora", "Compromisso","Local"};
-        String[][] tabela = new String[compromissos30dias.size()][4];
-        for(int i=0; i<compromissos30dias.size(); i++){
-            Compromisso comp = compromissos30dias.get(i);
-            tabela[i][0] = comp.getData().toString();
-            tabela[i][1] = comp.getHora().toString();
-            tabela[i][2] = comp.getDescricao();
-            tabela[i][3] = comp.getLocal();
-            
-        }
+            compromissos30dias = dao.readUsuario(usuarioLogado.getEmail())
+                    .compProx30DiasAgendaUser(comboNomeAgenda.getSelectedItem().toString(), LocalDate.now(), LocalDate.now().plusDays(30));
+            String[] titulos = {"Data", "Hora", "Compromisso", "Local"};
+            String[][] tabela = new String[compromissos30dias.size()][4];
+            for (int i = 0; i < compromissos30dias.size(); i++) {
+                Compromisso comp = compromissos30dias.get(i);
+                tabela[i][0] = comp.getData().toString();
+                tabela[i][1] = comp.getHora().toString();
+                tabela[i][2] = comp.getDescricao();
+                tabela[i][3] = comp.getLocal();
+
+            }
             System.out.println(compromissos30dias);
-        DefaultTableModel modelo = new DefaultTableModel(tabela, titulos);
-        tabelaInicial.setModel(modelo);
-        
-        } catch (ClassNotFoundException | IOException | SQLException ex){
-            JOptionPane.showMessageDialog(null,"Falha na conexão");
-        } catch (NullPointerException ex){
-            JOptionPane.showMessageDialog(null,"Sem compromissos");
+            tabelaInicial.removeAll();
+            DefaultTableModel modelo = new DefaultTableModel(tabela, titulos);
+            tabelaInicial.setModel(modelo);
+
+        } catch (ClassNotFoundException | IOException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha na conexão");
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, "Sem compromissos");
         }
-        
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_botaoAtualizarActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void comboNomeAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboNomeAgendaActionPerformed
 
-   
-    
+    }//GEN-LAST:event_comboNomeAgendaActionPerformed
+
+    private void botaoGerenciarAgendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerenciarAgendasActionPerformed
+        TelaGerenciarAgenda telaGerenciarAgenda = new TelaGerenciarAgenda();
+        telaGerenciarAgenda.setVisible(true);
+    }//GEN-LAST:event_botaoGerenciarAgendasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -263,11 +313,12 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botaoAtualizar;
+    private javax.swing.JButton botaoCriarAgendas;
+    private javax.swing.JButton botaoCriarCompromisso;
+    private javax.swing.JButton botaoGerenciarAgendas;
+    private static javax.swing.JComboBox comboNomeAgenda;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

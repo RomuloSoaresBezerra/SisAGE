@@ -5,8 +5,19 @@
  */
 package com.ifpb.agendaeletronica.interfacegrafica;
 
+import com.ifpb.agendaeletronica.cadastro.UsuarioDaoBinario;
 import com.ifpb.agendaeletronica.entidades.Compromisso;
+import static com.ifpb.agendaeletronica.interfacegrafica.TelaInicial.usuarioLogado;
+import com.ifpb.agendaeletronica.interfaces.UsuarioDao;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +29,9 @@ public class TelaGerenciarCompromisso extends javax.swing.JFrame {
     /**
      * Creates new form TelaGerenciarCompromisso
      */
+    private static UsuarioDao dao;
     public TelaGerenciarCompromisso() {
+        dao = new UsuarioDaoBinario(); 
         initComponents();
     }
 
@@ -39,8 +52,9 @@ public class TelaGerenciarCompromisso extends javax.swing.JFrame {
         botaoAtuliazar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaCompromisso = new javax.swing.JTable();
+        botaoEditarCompromisso = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Gerenciar Compromissos");
@@ -74,23 +88,31 @@ public class TelaGerenciarCompromisso extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabelaCompromisso);
 
+        botaoEditarCompromisso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoEditarCompromisso.setText("Editar");
+        botaoEditarCompromisso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarCompromissoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campoDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(campoDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,12 +121,13 @@ public class TelaGerenciarCompromisso extends javax.swing.JFrame {
                         .addGap(207, 207, 207))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(138, 138, 138))))
+                        .addGap(138, 138, 138))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(botaoEditarCompromisso)
+                        .addGap(214, 214, 214))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {campoDataFim, campoDataInicio});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,15 +144,51 @@ public class TelaGerenciarCompromisso extends javax.swing.JFrame {
                 .addComponent(botaoAtuliazar)
                 .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(botaoEditarCompromisso)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoAtuliazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtuliazarActionPerformed
+
+        
+        List<Compromisso> compromissos;
+        LocalDate dataInicio = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(campoDataInicio.getDate()));
+        LocalDate dataFim = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(campoDataFim.getDate()));
+        try {
+            compromissos = dao.readUsuario(usuarioLogado.getEmail()).compProx30DiasAgendaUser("Todas", dataInicio, dataFim);
+            String[] titulos = {"Data", "Hora", "Compromisso","Local"};
+        String[][] tabela = new String[compromissos.size()][4];
+        for(int i=0; i<compromissos.size(); i++){
+            Compromisso comp = compromissos.get(i);
+            tabela[i][0] = comp.getData().toString();
+            tabela[i][1] = comp.getHora().toString();
+            tabela[i][2] = comp.getDescricao();
+            tabela[i][3] = comp.getLocal();
+            
+        }
+            System.out.println(compromissos);
+            tabelaCompromisso.removeAll();
+        DefaultTableModel modelo = new DefaultTableModel(tabela, titulos);
+        tabelaCompromisso.setModel(modelo);
+        
+        } catch (ClassNotFoundException | IOException | SQLException ex){
+            JOptionPane.showMessageDialog(null,"Falha na conexão");
+        } catch (NullPointerException ex){
+            JOptionPane.showMessageDialog(null,"Sem compromissos");
+        }
+        
+       
         
     }//GEN-LAST:event_botaoAtuliazarActionPerformed
+
+    private void botaoEditarCompromissoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarCompromissoActionPerformed
+    TelaEditarCompromisso telaEditarCompromisso = new TelaEditarCompromisso();
+    telaEditarCompromisso.setVisible(true);
+    }//GEN-LAST:event_botaoEditarCompromissoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,12 +227,13 @@ public class TelaGerenciarCompromisso extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAtuliazar;
+    private javax.swing.JButton botaoEditarCompromisso;
     private com.toedter.calendar.JDateChooser campoDataFim;
     private com.toedter.calendar.JDateChooser campoDataInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaCompromisso;
+    private static javax.swing.JTable tabelaCompromisso;
     // End of variables declaration//GEN-END:variables
 }
