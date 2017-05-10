@@ -1,5 +1,5 @@
 package com.ifpb.agendaeletronica.excecoes;
 
-public class SenhaInvalidaException extends RuntimeException{
-    
+public class SenhaInvalidaException extends RuntimeException {
+
 }

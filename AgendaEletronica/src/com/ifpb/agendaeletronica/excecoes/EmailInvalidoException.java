@@ -1,5 +1,5 @@
 package com.ifpb.agendaeletronica.excecoes;
 
-public class EmailInvalidoException extends RuntimeException{
-    
+public class EmailInvalidoException extends RuntimeException {
+
 }

@@ -1,19 +1,10 @@
 package com.ifpb.agendaeletronica.interfaces;
 
-import com.ifpb.agendaeletronica.entidades.Usuario;
+import com.ifpb.agendaeletronica.modelo.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Classe que contem o CRUD para a Classe <code>Usuario</code>.
- *
- * @author Rômulo Soares Bezerra
- * @author Jozimar Soares da Costa
- * @see ArrayList
- * @see Usuario
- */
 public interface UsuarioDao {
 
     public Usuario readUsuario(String email) throws ClassNotFoundException, SQLException, IOException;
