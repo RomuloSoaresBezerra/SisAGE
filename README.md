@@ -2,8 +2,10 @@
 ## Sistema de Agenda Eletrônica
 ### Projeto da Disciplina de POO
 
-Com Persistencia de Dados em duas formas: 
-> **PostgreSQL Data Base** 
+**COM PERSISTÊNCIA DE DADOS DE DUAS FORMAS:**
+
+> **PostgreSQL Data Base**
+ 
 > E modo **Embarcado** (_Embedded_ - **arquivo binário**).  
 
 **INTRODUÇÃO**
